@@ -3,6 +3,7 @@ name: superwhisper-prompt-generator
 description: Use when someone wants to create, improve, or understand Superwhisper custom mode prompts. Use when users ask for help with Superwhisper dictation modes, speech-to-text processing instructions, or want to generate examples for AI dictation workflows.
 argument-hint: [task description or existing prompt to improve]
 context: fork
+allowed-tools: []
 ---
 
 # Superwhisper Prompt Generator
@@ -324,3 +325,64 @@ Requirements:
 ```
 
 Fill in the brackets based on your specific use case, then test and refine.
+
+## Output Format
+
+After generating a prompt, always output the result in this exact structure — as plain text in the chat, nothing else:
+
+```
+Custom Instructions:
+
+[Fertiger Prompt-Text]
+
+---
+Empfohlenes Modell: [Modellempfehlung]
+Empfohlenes Voice Model: [Voice-Modell-Empfehlung]
+
+---
+Example 1
+
+Input: [Beispiel-Input]
+Output: [Beispiel-Output]
+
+---
+Example 2
+
+Input: [Beispiel-Input]
+Output: [Beispiel-Output]
+
+---
+Example 3
+
+Input: [Beispiel-Input]
+Output: [Beispiel-Output]
+```
+
+### Modellempfehlungen
+
+Gib immer eine konkrete Empfehlung für:
+
+**AI/Language Model** (für die Prompt-Verarbeitung in Superwhisper):
+
+- **claude-sonnet-4-6** — Empfehlung für komplexe Prompts mit XML, Konditionallogik, mehreren Kontexten
+- **GPT-4o** — Alternative wenn kein Anthropic-Zugang vorhanden
+- **Lokale Modelle (z.B. Llama)** — Nur für sehr einfache Prompts ohne XML empfohlen
+
+**Voice Model** (für die Spracherkennung):
+
+- **sw-ultra-cloud-v1** — Empfehlung für Deutsch, höchste Erkennungsqualität
+- **sw-pro-cloud-v1** — Schneller, etwas geringere Qualität
+
+Beispiel-Output am Ende eines generierten Prompts:
+
+```text
+Empfohlenes Modell: claude-sonnet-4-6 (komplexe Instruktionen, XML-fähig)
+Empfohlenes Voice Model: sw-ultra-cloud-v1 (Deutsch, höchste Qualität)
+```
+
+## Wichtige Einschränkungen
+
+- **Niemals Dateien erstellen, lesen oder schreiben** — kein Bash, kein Tool-Einsatz jeglicher Art
+- **Nur Text-Output im Chat** — der User trägt den Prompt selbst in Superwhisper ein
+- **Keine JSON-Dateien** anlegen, auch wenn das Superwhisper-Format bekannt ist
+- Der Output ist immer reiner Text, der direkt kopiert werden kann
